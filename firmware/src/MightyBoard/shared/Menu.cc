@@ -759,11 +759,10 @@ void FilamentScreen::update(LiquidCrystalSerial& lcd, bool forceRedraw) {
 			lastHeatIndex = 0;
 			filamentState = FILAMENT_WAIT;
 			filamentTimer.clear();
-			filamentTimer.start(300000000); //5 minutes
-			/// Fallthrough
+			filamentTimer.start(300000000); // 5 Minutes
 		}
-			/// show heating bar status
-		case FILAMENT_WAIT:
+			// fallthrough
+		case FILAMENT_WAIT:               /// show heating bar status
 			lcd.writeFromPgmspace(HEATING_MSG);
 			lcd.moveWriteFromPgmspace(0, 1, EXTRUDER_TEMP_MSG);
 			lcd.moveWriteFromPgmspace(0, 3, FILAMENT_CANCEL_MSG);
@@ -854,14 +853,9 @@ void FilamentScreen::reset() {
 		filamentTemp[i] = DEFAULT_PREHEAT_TEMP;
 }
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Winline"
-
-FilamentMenu::FilamentMenu() : Menu(optionsMask, (uint8_t)4) {
+FilamentMenu::FilamentMenu() : Menu(optionsMask=0, (uint8_t) 4) {
 	reset();
 }
-
-#pragma GCC diagnostic pop
 
 void FilamentMenu::resetState() {
 	singleTool = eeprom::isSingleTool();
@@ -1533,7 +1527,7 @@ void MonitorModeScreen::update(LiquidCrystalSerial& lcd, bool forceRedraw) {
 		        if ( writeTimeLeft(lcd, 1) )
 			     break;
 			//We can't display the time left, so we drop into ZPosition instead
-			buildTimePhase = (enum BuildTimePhase)((uint8_t)buildTimePhase + 1);
+			buildTimePhase = (enum BuildTimePhase)((uint8_t)buildTimePhase + 1); // fallthrough
 
 		case BUILD_TIME_PHASE_FILAMENT:
 			lcd.moveWriteFromPgmspace(0, 1, MON_FILAMENT_MSG);
